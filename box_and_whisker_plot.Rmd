@@ -1,0 +1,32 @@
+---
+jupyter:
+  jupytext:
+    text_representation:
+      extension: .Rmd
+      format_name: rmarkdown
+      format_version: '1.1'
+      jupytext_version: 1.2.4
+  kernelspec:
+    display_name: Python 3
+    language: python
+    name: python3
+---
+
+# box-and-whisker plot using Python + Turtle
+## Oct 2019
+## Credits: bit.ly/2cUdV5Y, bit.ly/2BtdoWI
+
+
+this is our data-set
+
+```{python}
+list_data = [1,2,3,4,5,6,7,8,9]
+```
+
+```{python}
+list_data
+```
+
+```{python}
+
+```
