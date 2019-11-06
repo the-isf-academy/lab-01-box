@@ -12,12 +12,18 @@ jupyter:
     name: python3
 ---
 
-# box-and-whisker plot using Python + Turtle
+# Box-and-whisker plot using Python + Turtle
 ## Oct 2019
-## Credits: bit.ly/2cUdV5Y, bit.ly/2BtdoWI
+## Credits and References: bit.ly/2cUdV5Y, bit.ly/2BtdoWI
 
 
-this is our data-set
+
+
+```{python}
+
+```
+
+We first put the data into a list. You can modify the data set. Try putting floats in the list?
 
 ```{python}
 list_data = [1,2,3,4,5,6,7,8,9]
@@ -25,6 +31,233 @@ list_data = [1,2,3,4,5,6,7,8,9]
 
 ```{python}
 list_data
+```
+
+Sort the data in ascending order.
+
+```{python}
+# Step 1) Sort the list in ascending order (from smallest to largest)
+list_sorted = sorted(list_data, key= float)
+print("Sorted List ", list_sorted)
+```
+The Median will be the data in the middle position of the sorted list. But we need to see if there are even or odd numbers of elements in the list first. If there are even numbers of elements in the list, the Median is the average of the two middle elements.
+Note: When we count the elements, we count from 1. But when we index the list, we count from 0.
+
+```{python}
+# Step 2) Calculate the Median
+# If the list is odd: middle element is the Median
+# if the list is even: Median = average of the middle two elements
+
+if len(list_sorted) % 2 == 0: #if the list is even
+    middle_pos = int(len(list_sorted) / 2)
+    median = (list_sorted[middle_pos - 1] + list_sorted[middle_pos]) / 2.0
+else: # the list is odd
+    middle_pos = int((len(list_sorted) / 2) + 0.5)
+    median = list_sorted[middle_pos - 1]
+
+print ("Median is ", median)
+```
+Now calcalculate Q1 (the first qualtile) and Q3 (the third qualtile)
+
+```{python}
+# Step 3) Calculate Q1 and Q3
+# Q1
+Q1 = (len(list_sorted) * 0.25)
+Q1 = round (Q1)
+Q1 = list_sorted[Q1 - 1]
+print ("Q1 is ", Q1)
+# Q3
+Q3 = (len(list_sorted) * 0.75)
+Q3 = round (Q3)
+Q3 = list_sorted[Q3]
+print ("Q3 is ", Q3)
+```
+Find the extremes of the data set i.e. the max. and min.
+
+
+```{python}
+# Step 4) Finding the min and max and range
+# Min in the list
+list_min = min(list_sorted)
+print ("The min is ", list_min)
+# Max in the list
+list_max = max(list_sorted)
+print ("The max is ", list_max)
+```
+The range is the difference between the extremems and the Inter-quartile range will be the difference Q3 - Q1
+
+
+```{python}
+# range
+range = (list_max - list_min)
+print ("The range is ", range)
+
+normalized_len = (300 / range)
+# inter-quartile range
+iq_range = Q3 - Q1
+```
+Let's draw the results with the turtle.
+
+```{python}
+# Draw it!
+from turtle import *
+circle(10) # draw a circle at the origin
+
+#start from 50 units from the left edge
+penup()
+left(90)
+forward(50)
+right(90)
+```
+```{python}
+
+```
+
+draw the min. data point.
+
+```{python}
+# draw min. point
+color("blue")
+left(180)
+forward(150)
+right(90)
+pendown()
+forward(25)
+left(180)
+forward(50)
+penup()
+forward(25)
+write("Min")
+forward(15)
+write(list_min)
+left(180)
+forward(15)
+left(180)
+```
+draw the left 'whisker'
+
+```{python}
+# draw left line
+left(180)
+forward(50)
+pendown()
+right(90)
+forward(normalized_len * (Q1 - list_min))
+```
+draw the box
+
+```{python}
+# draw the box
+color("red")
+penup()
+left(90)
+forward(50)
+right(90)
+pendown()
+forward(iq_range * normalized_len)
+right(90)
+forward(100)
+right(90)
+forward(iq_range * normalized_len)
+right(90)
+forward(100)
+penup()
+```
+```{python active="", eval=FALSE}
+draw the labels Q1 and Q3.
+
+```
+
+```{python}
+# label Q1 and Q3
+left(180)
+forward(125)
+write("Q1")
+forward(15)
+write(Q1)
+left(180)
+forward(15)
+left(180)
+left(90)
+forward(iq_range * normalized_len)
+write("Q3")
+right(90)
+forward(15)
+write(Q3)
+left(180)
+forward(15)
+right(90)
+```
+Draw the Median line and the label in green.
+
+```{python}
+# draw & label Median
+color("green") #sets pen color to green
+left(90)
+forward(125)
+left(90)
+forward(iq_range * normalized_len)
+right(180)
+forward((median-Q1) * normalized_len)
+left(90)
+pendown()
+right(180)
+forward(100)
+penup()
+forward(25)
+write("Med")
+forward(15)
+write(median)
+left(180)
+forward(15)
+left(180)
+```
+Draw the max. data point and the right 'whisker'
+
+```{python}
+# draw max point and right hand line
+right(180)
+forward(75)
+color("blue") #sets pen color to blue
+left(90)
+forward((median - list_min) * normalized_len)
+right(180)
+forward((list_max - list_min)* normalized_len)
+left(90)
+pendown()
+forward(25)
+right(180)
+forward(50)
+penup()
+forward(25)
+write("Max")
+forward(15)
+write(list_max)
+left(180)
+forward(15)
+left(180)
+right(180)
+forward(50)
+left(90)
+pendown()
+forward((list_max-Q3) * normalized_len)
+penup()
+```
+Finishing...
+
+```{python}
+# finish
+#hideturtle()
+#input()
+```
+
+```{python}
+import axes_module
+```
+
+```{python}
+clamp_point(, {1,10})
+axes_module.draw_x_axis()
 ```
 
 ```{python}
