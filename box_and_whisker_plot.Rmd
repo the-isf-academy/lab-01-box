@@ -31,11 +31,11 @@ In this section of the jupyter notebook, your group will be performing the calcu
 
 **Q: What data types are we working with?**  
 
-🔢For a Box-and-whisker plot, we can use either a **list of integers or a list of floats**.
+🔢 For a Box-and-whisker plot, we can use either a **list of integers or a list of floats**.
 
 **Q: What data are we working with?**  
 
-✌️We're going to give you two data sets.
+✌️ We're going to give you two data sets.
 
 Right now, you will work with `test_data`, a simple integer list.
 
@@ -48,13 +48,13 @@ test_data = [6, 4, 5, 7, 1, 8, 2, 9, 3]
 ### 2. Sort the Data
 
 
-**💻TODO:** Write a function to sort a list so that it is in ascending order.
+**💻 TODO:** Write a function to sort a list so that it is in ascending order.
 
 ```{python}
 # YOUR FUNCTION DEFINITION
 ```
 
-**✅Done?** Test your code by running your sort function. data_points should be sorted in ascending order.
+**✅ Done?** Test your code by running your sort function. data_points should be sorted in ascending order.
 
 ```{python}
 #Test your function with a function call here. 
@@ -63,13 +63,13 @@ test_data = [6, 4, 5, 7, 1, 8, 2, 9, 3]
 ### 3. Work out Calculations  
 
 
-**💻TODO:** Functions to calculate the median, minimum, maximum, range, lower quartile, and upper quartile. Feel free to add more cells if you need it.
+**💻 TODO:** Functions to calculate the median, minimum, maximum, range, lower quartile, and upper quartile. Feel free to add more cells if you need it.
 
 ```{python}
 # YOUR FUNCTION DEFINITIONS
 ```
 
-**✅Done?** Test your code by running your functions on `test_data` below. Are the values the same if you calculate it by hand? You can also change sorted_test_data.
+**✅ Done?** Test your code by running your functions on `test_data` below. Are the values the same if you calculate it by hand? You can also change sorted_test_data.
 
 ```{python}
 #Test your function with a function call here. 
@@ -90,7 +90,7 @@ from helpers import get_database_as_list
 actual_data = get_database_as_list('social_media_use.csv', 'Social media accounts', (0,100))
 ```
 
-**💻TODO:** Sort the list `actual_data` using your sort list function. Then create 5 variables to store the 5 calculations your functions will return.
+**💻 TODO:** Sort the list `actual_data` using your sort list function. Then create 5 variables to store the 5 calculations your functions will return.
 
 ```{python}
 # YOUR FUNCTION CALLS
@@ -100,17 +100,162 @@ actual_data = get_database_as_list('social_media_use.csv', 'Social media account
 
 In this section of the jupyter notebook, your group will be drawing the calculations for the box and whisker plot.
 
+We feel like you've already had enough experience doing the drawing with scatter plot, so we wrote the drawing code for you. However, there are some bugs that will keep this code from running like you'd expect.
+
+**💻 TODO:** Find and fix the 4 bugs in the drawing code below.
 
 ```{python}
 from turtle import *
 from helpers import plot, scale, no_delay, restore_state_when_finished
+
+BOX_HEIGHT = 100
 ```
 
-**💻TODO:** Functions to draw the box and whiskers. 
+### draw_min( )
 
 ```{python}
-# YOUR FUNCTION DEFINITIONS
+def draw_min():
+    """
+    Draws a vertical line at the min point of the dataset and labels the min below the line
+    inputs: none
+    outputs: none
+    """
+    
+    with restore_state_when_finished():
+        color("blue")
+        penup()
+        goto(scale(list_min, plot_settings['turtle_axis_domain'], plot_settings['data_domain']),BOX_HEIGHT/2)
+        pendown()
+        goto(scale(list_min, plot_settings['turtle_axis_domain'], plot_settings['data_domain']),-BOX_HEIGHT/2)
+        penup()
+        goto(scale(list_min, plot_settings['turtle_axis_domain'], plot_settings['data_domain']),(-3/4)*BOX_HEIGHT)
+        write("Min", align="center")
+        goto(scale(list_min, plot_settings['turtle_axis_domain'], plot_settings['data_domain']),(-7/8)*BOX_HEIGHT)
+        write(list_min, align="center")
 ```
+### draw_left_whisker( )
+
+```{python}
+def draw_left_whisker():
+    """
+    Draws a horizontal line between the min point and the Q1 point of the dataset.
+    inputs: none
+    outputs: none
+    """
+    
+    with restore_state_when_finished():
+        penup()
+        goto(scale(list_min, plot_settings['data_domain'], plot_settings['turtle_axis_domain']),0)
+        pendown()
+        goto(scale(list_Q1, plot_settings['data_domain'], plot_settings['turtle_axis_domain']),0)
+```
+
+### draw_box( )
+
+```{python}
+def draw_box():
+    """
+    Draws a box of height `BOX_HEIGHT` beginning at Q1 and ending at Q3.
+    inputs: none
+    outputs: none
+    """
+    
+    with restore_state_when_finished():
+        color("red")
+        penup()
+        goto(scale(list_Q1, plot_settings['data_domain'], plot_settings['turtle_axis_domain']),-BOX_HEIGHT/2)
+        pendown()
+        goto(scale(list_Q3, plot_settings['data_domain'], plot_settings['turtle_axis_domain']),-BOX_HEIGHT/2)
+        goto(scale(list_Q3, plot_settings['data_domain'], plot_settings['turtle_axis_domain']),BOX_HEIGHT/2)
+        goto(scale(list_Q1, plot_settings['data_domain'], plot_settings['turtle_axis_domain']),BOX_HEIGHT/2)
+        goto(scale(list_Q1, plot_settings['data_domain'], plot_settings['turtle_axis_domain']),-BOX_HEIGHT/2)
+```
+
+### draw_quartile_labels( )
+
+```{python}
+def draw_quartile_labels():
+    """
+    Adds labels for Q1 and Q3 below the box.
+    inputs: none
+    outputs: none
+    """
+    
+    with restore_state_when_finished():
+        penup()
+        goto(scale(list_Q1, plot_settings['data_domain'], plot_settings['turtle_axis_domain']),(-3/4)*BOX_HEIGHT)
+        write("list_Q1", align="center")
+        goto(scale(list_Q1, plot_settings['data_domain'], plot_settings['turtle_axis_domain']),(-7/8)*BOX_HEIGHT)
+        write(list_Q3, align="center",)
+        goto(scale(list_Q3, plot_settings['data_domain'], plot_settings['turtle_axis_domain']),(-3/4)*BOX_HEIGHT)
+        write("list_Q3", align="center")
+        goto(scale(list_Q3, plot_settings['data_domain'], plot_settings['turtle_axis_domain']),(-7/8)*BOX_HEIGHT)
+        write(list_Q1, align="center")
+```
+
+### draw_median( )
+
+```{python}
+def draw_median():
+    """
+    Draws a vertical line at the median point of the dataset and labels the median below the box.
+    inputs: none
+    outputs: none
+    """
+    
+    with restore_state_when_finished():
+        penup()
+        color("green") #sets pen color to green
+        goto(scale(list_median, plot_settings['data_domain'], plot_settings['turtle_domain']),BOX_HEIGHT/2)
+        pendown()
+        goto(scale(list_median, plot_settings['data_domain'], plot_settings['turtle_domain']),-BOX_HEIGHT/2)
+        penup()
+        goto(scale(list_median, plot_settings['data_domain'], plot_settings['turtle_domain']),(-3/4)*BOX_HEIGHT)
+        write("Med", align="center")
+        goto(scale(list_median, plot_settings['data_domain'], plot_settings['turtle_domain']),(-7/8)*BOX_HEIGHT)
+        write(list_median, align="center")
+```
+
+### draw_max( )
+
+```{python}
+def draw_max():
+    """
+    Draws a vertical line at the max point of the dataset and labels the max below the line.
+    inputs: none
+    outputs: none
+    """
+    
+    with restore_state_when_finished():
+        color("blue")
+        penup()
+        goto(scale(list_max, plot_settings['data_domain'], plot_settings['turtle_axis_domain']),BOX_HEIGHT/2)
+        pendown()
+        goto(scale(list_max, plot_settings['data_domain'], plot_settings['turtle_axis_domain']),-BOX_HEIGHT/2)
+        penup()
+        goto(scale(list_max, plot_settings['data_domain'], plot_settings['turtle_axis_domain']),(-3/4)*BOX_HEIGHT)
+        write("Max", align="center")
+        goto(scale(list_max, plot_settings['data_domain'], plot_settings['turtle_axis_domain']),(-7/8)*BOX_HEIGHT)
+        write(list_max, align="center")
+```
+
+### draw_right_whisker( )
+
+```{python}
+def draw_right_whisker():
+    """
+    Draws a horizontal line between the max point and the Q3 point of the dataset.
+    inputs: none
+    outputs: none
+    """
+    
+    with restore_state_when_finished():
+        penup()
+        goto(scale(list_min, plot_settings['data_domain'], plot_settings['turtle_axis_domain']),0)
+        pendown()
+        goto(scale(list_Q1, plot_settings['data_domain'], plot_settings['turtle_axis_domain']),0)
+```
+
 <!-- #region -->
 # 🧩PUTTING IT ALL TOGETHER
 
