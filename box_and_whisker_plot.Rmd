@@ -35,14 +35,11 @@ In this section of the jupyter notebook, your group will be performing the calcu
 
 **Q: What data are we working with?**  
 
-✌️ We're going to give you two data sets.
-
-Right now, you will work with `test_data`, a simple integer list.
-
-`actual_data` is much longer. This is the actual data we want to plot.
+✌️ For now, work with the two test data sets below. Later, you will use `actual_data` (much longer), which is the actual data we want to plot.
 
 ```{python}
-test_data = [6, 4, 5, 7, 1, 8, 2, 9, 3]
+test_data_even = [6, 4, 5, 7, 1, 8, 2, 9, 3]
+test_data_odd = [6, 4, 5, 7, 1, 8, 2, 9, 3, 1]
 ```
 
 ### 2. Sort the Data
@@ -69,7 +66,7 @@ test_data = [6, 4, 5, 7, 1, 8, 2, 9, 3]
 # YOUR FUNCTION DEFINITIONS
 ```
 
-**✅ Done?** Test your code by running your functions on `test_data` below. Are the values the same if you calculate it by hand? You can also change sorted_test_data.
+**✅ Done?** Test your code by running the lines below. Are the values the same if you calculate it by hand? Make sure you also try this using `test_data_odd`. You can also create other test data sets to make sure your functions work properly.
 
 ```{python}
 #Test your function with a function call here. 

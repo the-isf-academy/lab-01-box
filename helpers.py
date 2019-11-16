@@ -25,6 +25,13 @@ TICK_SIZE = 4
 plot_settings = {}
 
 def clamp_point(x, domain):
+    """
+    x` should be a number and `domain` should be a list of length 2, like [0, 100].
+    Forces `x` to be within the domain. If `x` is outside the domain, returns the 
+    domain endpoint instead.
+    input: int or float, tuple (int,int)
+    output int or float
+    """
     if x < domain[0]:
         return domain[0]
     if x > domain[1]:
